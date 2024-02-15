@@ -63,6 +63,33 @@ void Unit::newTurn(){
 	guard_on = false;
 }
 
+bool Unit::isDead(){
+	if(hp <= 0) return true;
+	else return false;
+}
+
+void Unit::guard(){
+	guard_on = true;
+}
+
+int Unit::heal(){
+	int heal;
+	heal = (rand()%21 + 10 );
+	if(hp == hpmax) heal = 0  ;
+	else if((hp + heal) <= hpmax) hp += heal;
+    else{  heal -= ((hp+ heal) - hpmax); hp += heal; } ;
+	return heal;
+}
+
+int Unit::beAttacked(int Gdm){
+	if(guard_on) {Gdm = (Gdm - def)/3 ; hp -= Gdm ;}
+	else {Gdm = (Gdm - def) ; hp -= Gdm ;}
+	return Gdm;
+}
+
+int Unit::attack(Unit &type){
+	return type.beAttacked(atk);
+}
 
 
 /////////////////////////////////////////////////////////////////////////////////////
